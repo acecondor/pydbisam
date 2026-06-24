@@ -1,6 +1,5 @@
 import binascii
 
-
 class PyDBISAM:
     from .extract import (
         _read_field_definition,
@@ -9,8 +8,8 @@ class PyDBISAM:
         row,
     )
 
-    _FIELD_INFO_OFFSET = 0x200  # Offset of first field info definition
-    _FIELD_INFO_SIZE = 768  # Size of a single field info
+    _FIELD_INFO_OFFSET = 0x200
+    _FIELD_INFO_SIZE = 768
 
     def __init__(self, path=None, data: bytes = None):
         self._path = None

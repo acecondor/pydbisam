@@ -89,6 +89,24 @@ def _read_field_subheader(self):
 
         offset += self._FIELD_INFO_SIZE
 
+    # Correggi la dimensione per i tipi sconosciuti usando l'offset successivo
+    for i, col in enumerate(self._columns):
+        if col.is_unknown_type:
+            # Determina l'offset del prossimo campo (o la fine del record)
+            if i < len(self._columns) - 1:
+                next_offset = self._columns[i + 1].row_offset
+            else:
+                # Ultimo campo: la fine dei dati è row_size
+                next_offset = self._row_size + 1  # +1 per il flag del campo stesso
+
+            # La dimensione effettiva è next_offset - col.row_offset - 1 (il flag)
+            calculated_size = next_offset - col.row_offset - 1
+            if calculated_size < 0:
+                calculated_size = 0
+
+            col._size = calculated_size
+            col._type._size = calculated_size
+
 
 def _read_field_definition(self, data):
     col_index = struct.unpack_from("<H", data, 0x0)[0]
@@ -132,20 +150,7 @@ def row(self, index, extract_deleted=False):
 
     row_deleted = struct.unpack_from("<B", row_header_data, 0x0)[0]
 
-    # Not sure the exact behavior of these indexes
-    # row_idx_a = struct.unpack_from("<B", row_header_data, 0x1)[0]
-    # row_idx_b = struct.unpack_from("<B", row_header_data, 0x5)[0]
-    # row_checksum = row_header_data[0x9 : 0x9 + 16]
-
     if row_deleted and not extract_deleted:
         return None
-
-    # Debugging output for the row header
-    # return [
-    #     f"{index:03}",
-    #     binascii.hexlify(row_header_data).decode().upper(),
-    #     row_idx_a,
-    #     row_idx_b,
-    # ]
 
     return [field.decode_from_row(row_data) for field in self._columns]

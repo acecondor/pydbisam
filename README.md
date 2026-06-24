@@ -18,6 +18,53 @@ Questo progetto rimane sotto licenza ISC, come l’originale.
 Questo fork è stato sviluppato con l'assistenza di DeepSeek AI per l’analisi dei tipi DBISAM, la stesura delle modifiche e la documentazione.
 Tutto il codice è stato revisionato e testato manualmente.
 
+# DBISAM to CSV Exporter
+
+Batch export script for DBISAM tables (.dat) to CSV, based on
+[PyDBISAM](https://github.com/alinville/pydbisam) by Aaron Linville.
+
+## What's new in this fork
+
+- **New field types**: `TIME`, `GRAPHIC`, `AUTOINC_LARGE`, `FIXEDCHAR`
+- **Robust unknown type handling**: unknown field types no longer crash the parser – they are exported as empty cells and reported in the log
+- **Automatic exclusion**: `BLOB` and `GRAPHIC` are never exported to CSV
+- **Batch export script**: `esporta.py` converts all `.dat` files in a folder
+- **Empty table option**: skip tables with zero records (configurable)
+
+## Supported DBISAM field types
+
+| Type ID | DBISAM Type      | Size  | Exported to CSV |
+|---------|------------------|-------|-----------------|
+| 1       | STRING           | var   | Yes             |
+| 2       | DATE             | 4     | Yes             |
+| 3       | BLOB             | var   | No (excluded)   |
+| 4       | BOOLEAN          | 1     | Yes             |
+| 5       | SHORT INTEGER    | 2     | Yes             |
+| 6       | INTEGER          | 4     | Yes             |
+| 7       | FLOAT            | 8     | Yes             |
+| 10      | TIME             | 4     | Yes             |
+| 11      | TIMESTAMP        | 8     | Yes             |
+| 18      | AUTOINC LARGE    | 8     | Yes             |
+| 5383    | CURRENCY         | 8     | Yes             |
+| 5635    | BCD              | 8     | Yes             |
+| 6659    | GRAPHIC          | var   | No (excluded)   |
+| 7430    | AUTOINCREMENT    | 4     | Yes             |
+| 7937    | FIXEDCHAR        | var   | Yes             |
+
+Any **unknown type** (type ID not listed above) is logged and exported as an empty cell, so the export never breaks.
+
+## Quick start
+
+1. Clone the repository or download the `export` folder.
+2. Open `export/esporta.py` and set:
+   - `origine` → folder containing `.dat` files
+   - `destinazione` → folder where `.csv` will be created
+3. Run:
+   ```bash
+   python export/esporta.py
+
+-------------------------------------------------   
+
 PyDBISAM
 ========
 

@@ -13,6 +13,11 @@ Fork di [PyDBISAM](https://github.com/alinville/pydbisam) di Aaron Linville.
 
 Questo progetto rimane sotto licenza ISC, come l’originale.
 
+## Sviluppo
+
+Questo fork è stato sviluppato con l'assistenza di DeepSeek AI per l’analisi dei tipi DBISAM, la stesura delle modifiche e la documentazione.
+Tutto il codice è stato revisionato e testato manualmente.
+
 PyDBISAM
 ========
 

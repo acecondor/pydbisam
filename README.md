@@ -1,3 +1,18 @@
+# PyDBISAM Extended
+
+Fork di [PyDBISAM](https://github.com/alinville/pydbisam) di Aaron Linville.
+
+## Modifiche principali
+
+- Aggiunti i tipi mancanti: TIME, GRAPHIC, AUTOINC_LARGE, FIXEDCHAR.
+- Gestione automatica dei tipi sconosciuti (non bloccano più l’apertura delle tabelle).
+- Nuovo script `esporta.py` per esportare tutte le tabelle .dat in CSV.
+- I campi BLOB e GRAPHIC vengono automaticamente esclusi dall’esportazione.
+
+## Licenza
+
+Questo progetto rimane sotto licenza ISC, come l’originale.
+
 PyDBISAM
 ========
 

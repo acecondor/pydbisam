@@ -2,6 +2,11 @@
 
 Fork di [PyDBISAM](https://github.com/alinville/pydbisam) di Aaron Linville.
 
+## Credits
+
+- Original PyDBISAM library by Aaron Linville (https://github.com/alinville/pydbisam)
+- Memo/Blob handling adapted from the fork by maxthoursie (https://github.com/maxthoursie/pydbisam)
+
 ## Modifiche principali
 
 - Aggiunti i tipi mancanti: TIME, GRAPHIC, AUTOINC_LARGE, FIXEDCHAR.
